@@ -1,0 +1,160 @@
+---
+strategy: static
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+framework_version: 2.3.7
+serverless_language: ''
+polling_url: ''
+polling_headers: ''
+polling_body: ''
+id: 30089
+oauth_enabled: 'false'
+oauth_pkce_enabled: 'no'
+oauth_authorize_url: ''
+oauth_token_url: ''
+oauth_scopes: ''
+oauth_scope_separator: ''
+oauth_refresh_url: ''
+oauth_auth_params: ''
+oauth_token_headers: ''
+oauth_token_site: ''
+oauth_token_params: ''
+oauth_token_request_auth_method: ''
+oauth_body_format: ''
+oauth_token_response_metadata: ''
+oauth_authorization_method: ''
+oauth_refresh_params: ''
+oauth_token_field_name: ''
+oauth_expiry_field_name: ''
+oauth_expiry_strategy: ''
+oauth_fixed_expiry_ms: ''
+custom_fields:
+- keyname: doesnt_matter
+  field_type: author_bio
+  name: About This Plugin
+  category: custom,calendar
+  description: Simple plugin to plan this/next week's meals. Questions or feedback? Just send me an e-mail.
+  email_address: michael.kurath@gmail.com
+- keyname: locale
+  field_type: select
+  name: Language
+  description: Day names displayed in what language?
+  default: default
+  options:
+  - default
+  - de
+  - en
+  - fr
+  - it
+  - es
+  - nl
+- keyname: show_breakfast
+  field_type: select
+  name: Show Breakfast
+  default: true
+  options:
+  - true
+  - false
+- keyname: show_lunch
+  field_type: select
+  name: Show Lunch
+  default: true
+  options:
+  - true
+  - false
+- keyname: show_dinner
+  field_type: select
+  name: Show Dinner
+  default: true
+  options:
+  - true
+  - false
+- keyname: monday_breakfast
+  field_type: text
+  name: Monday Breakfast
+  placeholder: Breakfast
+- keyname: monday_lunch
+  field_type: text
+  name: Monday Lunch
+  placeholder: Lunch
+- keyname: monday_dinner
+  field_type: text
+  name: Monday Dinner
+  placeholder: Dinner
+- keyname: tuesday_breakfast
+  field_type: text
+  name: Tuesday Breakfast
+  placeholder: Breakfast
+- keyname: tuesday_lunch
+  field_type: text
+  name: Tuesday Lunch
+  placeholder: Lunch
+- keyname: tuesday_dinner
+  field_type: text
+  name: Tuesday Dinner
+  placeholder: Dinner
+- keyname: wednesday_breakfast
+  field_type: text
+  name: Wednesday Breakfast
+  placeholder: Breakfast
+- keyname: wednesday_lunch
+  field_type: text
+  name: Wednesday Lunch
+  placeholder: Lunch
+- keyname: wednesday_dinner
+  field_type: text
+  name: Wednesday Dinner
+  placeholder: Dinner
+- keyname: thursday_breakfast
+  field_type: text
+  name: Thursday Breakfast
+  placeholder: Breakfast
+- keyname: thursday_lunch
+  field_type: text
+  name: Thursday Lunch
+  placeholder: Lunch
+- keyname: thursday_dinner
+  field_type: text
+  name: Thursday Dinner
+  placeholder: Dinner
+- keyname: friday_breakfast
+  field_type: text
+  name: Friday Breakfast
+  placeholder: Breakfast
+- keyname: friday_lunch
+  field_type: text
+  name: Friday Lunch
+  placeholder: Lunch
+- keyname: friday_dinner
+  field_type: text
+  name: Friday Dinner
+  placeholder: Dinner
+- keyname: saturday_breakfast
+  field_type: text
+  name: Saturday Breakfast
+  placeholder: Breakfast
+- keyname: saturday_lunch
+  field_type: text
+  name: Saturday Lunch
+  placeholder: Lunch
+- keyname: saturday_dinner
+  field_type: text
+  name: Saturday Dinner
+  placeholder: Dinner
+- keyname: sunday_breakfast
+  field_type: text
+  name: Sunday Breakfast
+  placeholder: Breakfast
+- keyname: sunday_lunch
+  field_type: text
+  name: Sunday Lunch
+  placeholder: Lunch
+- keyname: sunday_dinner
+  field_type: text
+  name: Sunday Dinner
+  placeholder: Dinner
+name: Weekly Meal Planner
+description:
+refresh_interval: 1440
