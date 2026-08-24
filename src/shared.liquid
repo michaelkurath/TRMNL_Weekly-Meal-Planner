@@ -1,0 +1,433 @@
+{% assign current_week = 'now' | date: '%V' %}
+{% assign current_dow = 'now' | date: '%u' %}
+
+{% assign show_breakfast = trmnl.plugin_settings.custom_fields_values.show_breakfast | default: "true" | downcase | strip %}
+{% assign show_lunch = trmnl.plugin_settings.custom_fields_values.show_lunch | default: "true" | downcase | strip %}
+{% assign show_dinner = trmnl.plugin_settings.custom_fields_values.show_dinner | default: "true" | downcase | strip %}
+
+{% assign raw_locale = trmnl.plugin_settings.custom_fields_values.locale | default: "default" | downcase | strip %}
+
+{% if raw_locale == "default" or raw_locale == "" %}
+  {% assign raw_locale = trmnl.user.locale | default: "en" | downcase | strip %}
+{% endif %}
+
+{% assign lang = raw_locale | split: "-" | first %}
+
+{% case lang %}
+  {% when "de" %}
+    {% assign day_mon = "Montag" %}
+    {% assign day_tue = "Dienstag" %}
+    {% assign day_wed = "Mittwoch" %}
+    {% assign day_thu = "Donnerstag" %}
+    {% assign day_fri = "Freitag" %}
+    {% assign day_sat = "Samstag" %}
+    {% assign day_sun = "Sonntag" %}
+    {% assign title_wmp = "Wöchentlicher Speiseplan" %}
+
+    {% assign label_breakfast = "Frühstück" %}
+    {% assign label_lunch = "Mittag" %}
+    {% assign label_dinner = "Abendessen" %}
+
+    {% assign label_breakfast_short = "Früh." %}
+    {% assign label_lunch_short = "Mitt." %}
+    {% assign label_dinner_short = "Abend" %}
+
+  {% when "fr" %}
+    {% assign day_mon = "Lundi" %}
+    {% assign day_tue = "Mardi" %}
+    {% assign day_wed = "Mercredi" %}
+    {% assign day_thu = "Jeudi" %}
+    {% assign day_fri = "Vendredi" %}
+    {% assign day_sat = "Samedi" %}
+    {% assign day_sun = "Dimanche" %}
+    {% assign title_wmp = "Planificateur de repas" %}
+
+    {% assign label_breakfast = "Petit-déjeuner" %}
+    {% assign label_lunch = "Déjeuner" %}
+    {% assign label_dinner = "Dîner" %}
+
+    {% assign label_breakfast_short = "P.-déj." %}
+    {% assign label_lunch_short = "Déj." %}
+    {% assign label_dinner_short = "Dîner" %}
+
+  {% when "it" %}
+    {% assign day_mon = "Lunedì" %}
+    {% assign day_tue = "Martedì" %}
+    {% assign day_wed = "Mercoledì" %}
+    {% assign day_thu = "Giovedì" %}
+    {% assign day_fri = "Venerdì" %}
+    {% assign day_sat = "Sabato" %}
+    {% assign day_sun = "Domenica" %}
+    {% assign title_wmp = "Piano pasti settimanale" %}
+
+    {% assign label_breakfast = "Colazione" %}
+    {% assign label_lunch = "Pranzo" %}
+    {% assign label_dinner = "Cena" %}
+
+    {% assign label_breakfast_short = "Col." %}
+    {% assign label_lunch_short = "Pranzo" %}
+    {% assign label_dinner_short = "Cena" %}
+
+  {% when "es" %}
+    {% assign day_mon = "Lunes" %}
+    {% assign day_tue = "Martes" %}
+    {% assign day_wed = "Miércoles" %}
+    {% assign day_thu = "Jueves" %}
+    {% assign day_fri = "Viernes" %}
+    {% assign day_sat = "Sábado" %}
+    {% assign day_sun = "Domingo" %}
+    {% assign title_wmp = "Planificador semanal" %}
+
+    {% assign label_breakfast = "Desayuno" %}
+    {% assign label_lunch = "Almuerzo" %}
+    {% assign label_dinner = "Cena" %}
+
+    {% assign label_breakfast_short = "Des." %}
+    {% assign label_lunch_short = "Alm." %}
+    {% assign label_dinner_short = "Cena" %}
+
+  {% when "nl" %}
+    {% assign day_mon = "Maandag" %}
+    {% assign day_tue = "Dinsdag" %}
+    {% assign day_wed = "Woensdag" %}
+    {% assign day_thu = "Donderdag" %}
+    {% assign day_fri = "Vrijdag" %}
+    {% assign day_sat = "Zaterdag" %}
+    {% assign day_sun = "Zondag" %}
+    {% assign title_wmp = "Wekelijkse maaltijdplanner" %}
+
+    {% assign label_breakfast = "Ontbijt" %}
+    {% assign label_lunch = "Lunch" %}
+    {% assign label_dinner = "Avondeten" %}
+
+    {% assign label_breakfast_short = "Ontb." %}
+    {% assign label_lunch_short = "Lunch" %}
+    {% assign label_dinner_short = "Avond" %}
+
+  {% else %}
+    {% assign day_mon = "Monday" %}
+    {% assign day_tue = "Tuesday" %}
+    {% assign day_wed = "Wednesday" %}
+    {% assign day_thu = "Thursday" %}
+    {% assign day_fri = "Friday" %}
+    {% assign day_sat = "Saturday" %}
+    {% assign day_sun = "Sunday" %}
+    {% assign title_wmp = "Weekly Meal Planner" %}
+
+    {% assign label_breakfast = "Breakfast" %}
+    {% assign label_lunch = "Lunch" %}
+    {% assign label_dinner = "Dinner" %}
+
+    {% assign label_breakfast_short = "Break." %}
+    {% assign label_lunch_short = "Lunch" %}
+    {% assign label_dinner_short = "Dinner" %}
+{% endcase %}
+
+{% assign monday_breakfast = trmnl.plugin_settings.custom_fields_values.monday_breakfast | default: '-' %}
+{% assign monday_lunch = trmnl.plugin_settings.custom_fields_values.monday_lunch | default: '-' %}
+{% assign monday_dinner = trmnl.plugin_settings.custom_fields_values.monday_dinner | default: '-' %}
+
+{% assign tuesday_breakfast = trmnl.plugin_settings.custom_fields_values.tuesday_breakfast | default: '-' %}
+{% assign tuesday_lunch = trmnl.plugin_settings.custom_fields_values.tuesday_lunch | default: '-' %}
+{% assign tuesday_dinner = trmnl.plugin_settings.custom_fields_values.tuesday_dinner | default: '-' %}
+
+{% assign wednesday_breakfast = trmnl.plugin_settings.custom_fields_values.wednesday_breakfast | default: '-' %}
+{% assign wednesday_lunch = trmnl.plugin_settings.custom_fields_values.wednesday_lunch | default: '-' %}
+{% assign wednesday_dinner = trmnl.plugin_settings.custom_fields_values.wednesday_dinner | default: '-' %}
+
+{% assign thursday_breakfast = trmnl.plugin_settings.custom_fields_values.thursday_breakfast | default: '-' %}
+{% assign thursday_lunch = trmnl.plugin_settings.custom_fields_values.thursday_lunch | default: '-' %}
+{% assign thursday_dinner = trmnl.plugin_settings.custom_fields_values.thursday_dinner | default: '-' %}
+
+{% assign friday_breakfast = trmnl.plugin_settings.custom_fields_values.friday_breakfast | default: '-' %}
+{% assign friday_lunch = trmnl.plugin_settings.custom_fields_values.friday_lunch | default: '-' %}
+{% assign friday_dinner = trmnl.plugin_settings.custom_fields_values.friday_dinner | default: '-' %}
+
+{% assign saturday_breakfast = trmnl.plugin_settings.custom_fields_values.saturday_breakfast | default: '-' %}
+{% assign saturday_lunch = trmnl.plugin_settings.custom_fields_values.saturday_lunch | default: '-' %}
+{% assign saturday_dinner = trmnl.plugin_settings.custom_fields_values.saturday_dinner | default: '-' %}
+
+{% assign sunday_breakfast = trmnl.plugin_settings.custom_fields_values.sunday_breakfast | default: '-' %}
+{% assign sunday_lunch = trmnl.plugin_settings.custom_fields_values.sunday_lunch | default: '-' %}
+{% assign sunday_dinner = trmnl.plugin_settings.custom_fields_values.sunday_dinner | default: '-' %}
+
+<style>
+  .meal-test-layout {
+    height: 100%;
+    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    overflow: hidden;
+  }
+
+  .meal-card-grid {
+    width: 100%;
+    display: grid;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+  }
+
+  .meal-card {
+    border: 1px solid #000;
+    border-radius: 6px;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .meal-card.today {
+    background: #000;
+    color: #fff;
+  }
+
+  .meal-day {
+    font-weight: 700;
+    border-bottom: 1px solid currentColor;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .meal-line {
+    display: flex;
+    align-items: baseline;
+    min-width: 0;
+    line-height: 1.05;
+  }
+
+  .meal-label {
+    flex: 0 0 auto;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .meal-value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .meal-full .meal-card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .meal-full .meal-card {
+    padding: 5px 7px;
+  }
+
+  .meal-full .meal-day {
+    font-size: 20px;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+
+  .meal-full .meal-line {
+    font-size: 14px;
+    gap: 6px;
+  }
+
+  .meal-full .meal-label {
+    min-width: 78px;
+  }
+
+  .meal-half-horizontal .meal-card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .meal-half-horizontal .meal-card {
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+
+  .meal-half-horizontal .meal-day {
+    font-size: 10px;
+    padding-bottom: 1px;
+    margin-bottom: 1px;
+  }
+
+  .meal-half-horizontal .meal-line {
+    font-size: 8px;
+    line-height: 1;
+    gap: 2px;
+  }
+
+  .meal-half-horizontal .meal-label {
+    min-width: 58px;
+  }
+
+  .meal-half-vertical .meal-card-grid {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .meal-half-vertical .meal-card {
+    padding: 3px 5px;
+  }
+
+  .meal-half-vertical .meal-day {
+    font-size: 13px;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+  }
+
+  .meal-half-vertical .meal-line {
+    font-size: 10px;
+    gap: 4px;
+    line-height: 1.02;
+  }
+
+  .meal-half-vertical .meal-label {
+    min-width: 38px;
+  }
+
+  .meal-quadrant .meal-card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .meal-quadrant .meal-card {
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+
+  .meal-quadrant .meal-day {
+    font-size: 10px;
+    padding-bottom: 1px;
+    margin-bottom: 1px;
+  }
+
+  .meal-quadrant .meal-line {
+    font-size: 8px;
+    line-height: 1;
+    gap: 2px;
+  }
+
+  .meal-quadrant .meal-label {
+    min-width: 34px;
+  }
+
+ /* TRMNL X / larger screens */
+@media screen and (min-width: 1000px) {
+  .meal-full .meal-card-grid {
+    gap: 14px;
+  }
+
+  .meal-full .meal-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .meal-full .meal-day {
+    font-size: 34px;
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+  }
+
+  .meal-full .meal-line {
+    font-size: 22px;
+    line-height: 1.15;
+    gap: 10px;
+  }
+
+  .meal-full .meal-label {
+    min-width: 120px;
+  }
+
+  /*
+    Half horizontal on X:
+    Still compact, but no need to be as tiny as OG.
+  */
+  .meal-half-horizontal .meal-card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .meal-half-horizontal .meal-card {
+    padding: 5px 7px;
+    border-radius: 6px;
+  }
+
+  .meal-half-horizontal .meal-day {
+    font-size: 16px;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+  }
+
+  .meal-half-horizontal .meal-line {
+    font-size: 12px;
+    line-height: 1.05;
+    gap: 4px;
+  }
+
+  .meal-half-horizontal .meal-label {
+    min-width: 88px;
+  }
+
+  /*
+    Half vertical on X:
+    Much more readable than OG, but still single column.
+  */
+  .meal-half-vertical .meal-card-grid {
+    gap: 7px;
+  }
+
+  .meal-half-vertical .meal-card {
+    padding: 7px 9px;
+    border-radius: 8px;
+  }
+
+  .meal-half-vertical .meal-day {
+    font-size: 21px;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+
+  .meal-half-vertical .meal-line {
+    font-size: 15px;
+    line-height: 1.08;
+    gap: 5px;
+  }
+
+  .meal-half-vertical .meal-label {
+    min-width: 58px;
+  }
+
+  /*
+    Quadrant on X:
+    Can be bigger than OG but still must fit all 7 days.
+  */
+  .meal-quadrant .meal-card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .meal-quadrant .meal-card {
+    padding: 4px 6px;
+    border-radius: 6px;
+  }
+
+  .meal-quadrant .meal-day {
+    font-size: 14px;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+  }
+
+  .meal-quadrant .meal-line {
+    font-size: 10px;
+    line-height: 1.05;
+    gap: 3px;
+  }
+
+  .meal-quadrant .meal-label {
+    min-width: 44px;
+  }
+}
+</style>
