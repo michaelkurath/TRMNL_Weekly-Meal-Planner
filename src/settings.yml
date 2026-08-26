@@ -31,12 +31,13 @@ oauth_expiry_field_name: ''
 oauth_expiry_strategy: ''
 oauth_fixed_expiry_ms: ''
 custom_fields:
-- keyname: doesnt_matter
+- keyname: author_bio
   field_type: author_bio
   name: About This Plugin
   category: custom,calendar
-  description: Simple plugin to plan this/next week's meals. Questions or feedback? Just send me an e-mail.
+  description: Plan breakfast, lunch, and dinner for every day of the week. Source code and documentation are available on <a href="https://github.com/michaelkurath/TRMNL_Weekly-Meal-Planner" target="_blank" rel="noopener">GitHub</a>.
   email_address: michael.kurath@gmail.com
+  learn_more_url: https://github.com/michaelkurath/TRMNL_Weekly-Meal-Planner
 - keyname: locale
   field_type: select
   name: Language
@@ -156,5 +157,5 @@ custom_fields:
   name: Sunday Dinner
   placeholder: Dinner
 name: Weekly Meal Planner
-description:
+description: Plan weekly meals at a glance
 refresh_interval: 1440
