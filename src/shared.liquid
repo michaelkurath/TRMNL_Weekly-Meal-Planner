@@ -237,6 +237,16 @@
     min-width: 78px;
   }
 
+  .meal-full .meal-value {
+    flex: 1 1 auto;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+  }
+
   .meal-half-horizontal .meal-card-grid {
     grid-template-columns: 1fr 1fr;
     gap: 3px;
@@ -339,6 +349,10 @@
 
   .meal-full .meal-label {
     min-width: 120px;
+  }
+
+  .meal-full .meal-value {
+    -webkit-line-clamp: 3;
   }
 
   /*
